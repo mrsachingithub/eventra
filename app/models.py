@@ -3,7 +3,7 @@ from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'event_users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -20,20 +20,20 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 class Venue(db.Model):
-    __tablename__ = 'venues'
+    __tablename__ = 'event_venues'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
     address = db.Column(db.String(200), nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
-    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True) # Organizer
+    owner_id = db.Column(db.Integer, db.ForeignKey('event_users.id'), nullable=True) # Organizer
     
     events = db.relationship('Event', backref='venue', lazy=True)
     seats = db.relationship('Seat', backref='venue', lazy=True, cascade="all, delete-orphan")
 
 class Seat(db.Model):
-    __tablename__ = 'seats'
+    __tablename__ = 'event_seats'
     id = db.Column(db.Integer, primary_key=True)
-    venue_id = db.Column(db.Integer, db.ForeignKey('venues.id'), nullable=False)
+    venue_id = db.Column(db.Integer, db.ForeignKey('event_venues.id'), nullable=False)
     row_label = db.Column(db.String(5), nullable=False)
     seat_number = db.Column(db.Integer, nullable=False)
     seat_type = db.Column(db.String(20), default='Regular') # Regular, VIP
@@ -42,13 +42,13 @@ class Seat(db.Model):
     __table_args__ = (db.UniqueConstraint('venue_id', 'row_label', 'seat_number', name='unique_seat_per_venue'),)
 
 class Event(db.Model):
-    __tablename__ = 'events'
+    __tablename__ = 'event_events'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150), nullable=False)
     description = db.Column(db.Text, nullable=True)
     date_time = db.Column(db.DateTime, nullable=False)
-    venue_id = db.Column(db.Integer, db.ForeignKey('venues.id'), nullable=False)
-    organizer_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    venue_id = db.Column(db.Integer, db.ForeignKey('event_venues.id'), nullable=False)
+    organizer_id = db.Column(db.Integer, db.ForeignKey('event_users.id'), nullable=False)
     base_price = db.Column(db.Float, nullable=False)
     status = db.Column(db.String(20), default='Active') # Active, Cancelled
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -56,10 +56,10 @@ class Event(db.Model):
     bookings = db.relationship('Booking', backref='event', lazy=True)
 
 class Booking(db.Model):
-    __tablename__ = 'bookings'
+    __tablename__ = 'event_bookings'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('event_users.id'), nullable=False)
+    event_id = db.Column(db.Integer, db.ForeignKey('event_events.id'), nullable=False)
     status = db.Column(db.String(20), default='Pending') # Pending, Confirmed, Cancelled, Failed
     total_amount = db.Column(db.Float, nullable=False)
     expires_at = db.Column(db.DateTime, nullable=True) # For locking mechanism
@@ -69,17 +69,17 @@ class Booking(db.Model):
     payments = db.relationship('Payment', backref='booking', lazy=True)
 
 class Ticket(db.Model):
-    __tablename__ = 'tickets'
+    __tablename__ = 'event_tickets'
     id = db.Column(db.Integer, primary_key=True)
-    booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'), nullable=False)
-    seat_id = db.Column(db.Integer, db.ForeignKey('seats.id'), nullable=False)
+    booking_id = db.Column(db.Integer, db.ForeignKey('event_bookings.id'), nullable=False)
+    seat_id = db.Column(db.Integer, db.ForeignKey('event_seats.id'), nullable=False)
     unique_code = db.Column(db.String(50), unique=True, nullable=False)
     status = db.Column(db.String(20), default='Valid') # Valid, Cancelled, Used
 
 class Payment(db.Model):
-    __tablename__ = 'payments'
+    __tablename__ = 'event_payments'
     id = db.Column(db.Integer, primary_key=True)
-    booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'), nullable=False)
+    booking_id = db.Column(db.Integer, db.ForeignKey('event_bookings.id'), nullable=False)
     amount = db.Column(db.Float, nullable=False)
     status = db.Column(db.String(20), default='Pending') # Pending, Paid, Failed
     transaction_id = db.Column(db.String(100), nullable=True)
