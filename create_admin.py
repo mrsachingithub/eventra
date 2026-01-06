@@ -14,11 +14,10 @@ def create_admin_user():
 
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
-            print(f"User '{username}' already exists.")
-            # Optional: reset password
-            # existing_user.set_password(password)
-            # db.session.commit()
-            # print(f"Password for '{username}' has been reset to '{password}'.")
+            print(f"User '{username}' already exists. Resetting password...")
+            existing_user.set_password(password)
+            db.session.commit()
+            print(f"Password for '{username}' has been reset to '{password}'.")
         else:
             new_user = User(username=username, email=email, role=role)
             new_user.set_password(password)

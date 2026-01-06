@@ -11,3 +11,4 @@ python -c "import os, psycopg2; from urllib.parse import urlparse; url=urlparse(
 # Generate migration if changes detected (or initial run)
 python -m flask db migrate -m "Auto-generated migration" || true
 python -m flask db upgrade
+python create_admin.py
