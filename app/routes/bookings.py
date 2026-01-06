@@ -45,7 +45,7 @@ def get_seats(event_id):
 @bookings_bp.route('/lock', methods=['POST'])
 @jwt_required()
 def lock_tickets():
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     data = request.get_json()
     event_id = data.get('event_id')
     seat_ids = data.get('seat_ids') # List of seat IDs
@@ -115,7 +115,7 @@ def lock_tickets():
 @bookings_bp.route('/confirm', methods=['POST'])
 @jwt_required()
 def confirm_booking():
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     data = request.get_json()
     booking_id = data.get('booking_id')
     
@@ -162,7 +162,7 @@ def confirm_booking():
 @bookings_bp.route('/my', methods=['GET'])
 @jwt_required()
 def my_bookings():
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     bookings = Booking.query.filter_by(user_id=user_id).order_by(Booking.created_at.desc()).all()
     
     result = []

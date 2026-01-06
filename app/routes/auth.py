@@ -55,8 +55,8 @@ def login():
     user = User.query.filter_by(username=username).first()
 
     if user and user.check_password(password):
-        access_token = create_access_token(identity=user.id, additional_claims={"role": user.role})
-        refresh_token = create_refresh_token(identity=user.id)
+        access_token = create_access_token(identity=str(user.id), additional_claims={"role": user.role})
+        refresh_token = create_refresh_token(identity=str(user.id))
         return jsonify(access_token=access_token, refresh_token=refresh_token, role=user.role), 200
 
     return jsonify({"msg": "Bad username or password"}), 401
@@ -64,7 +64,7 @@ def login():
 @auth_bp.route('/me', methods=['GET'])
 @jwt_required()
 def me():
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     user = User.query.get(current_user_id)
     return jsonify({
         "id": user.id,
@@ -77,5 +77,5 @@ def me():
 @jwt_required(refresh=True)
 def refresh():
     identity = get_jwt_identity()
-    access_token = create_access_token(identity=identity)
+    access_token = create_access_token(identity=str(identity))
     return jsonify(access_token=access_token), 200

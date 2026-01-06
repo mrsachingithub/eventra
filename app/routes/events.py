@@ -12,7 +12,7 @@ events_bp = Blueprint('events', __name__)
 @role_required('organizer')
 def create_venue():
     data = request.get_json()
-    organizer_id = get_jwt_identity()
+    organizer_id = int(get_jwt_identity())
     
     name = data.get('name')
     address = data.get('address')
@@ -52,7 +52,7 @@ def create_venue():
 @events_bp.route('/venues', methods=['GET'])
 @role_required('organizer')
 def get_my_venues():
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     venues = Venue.query.filter_by(owner_id=current_user_id).all()
     return jsonify([{
         "id": v.id, "name": v.name, "address": v.address, "capacity": v.capacity
@@ -64,7 +64,7 @@ def get_my_venues():
 @role_required('organizer')
 def create_event():
     data = request.get_json()
-    organizer_id = get_jwt_identity()
+    organizer_id = int(get_jwt_identity())
     
     title = data.get('title')
     description = data.get('description')
@@ -114,7 +114,7 @@ def get_public_events():
 @events_bp.route('/organizer', methods=['GET'])
 @role_required('organizer')
 def get_organizer_events():
-    organizer_id = get_jwt_identity()
+    organizer_id = int(get_jwt_identity())
     events = Event.query.filter_by(organizer_id=organizer_id).all()
     return jsonify([{
         "id": e.id,
@@ -143,7 +143,7 @@ def get_event_details(event_id):
 @events_bp.route('/<int:event_id>/bookings', methods=['GET'])
 @role_required('organizer')
 def get_event_bookings(event_id):
-    organizer_id = get_jwt_identity()
+    organizer_id = int(get_jwt_identity())
     event = Event.query.get_or_404(event_id)
     
     # Security: Ensure current user owns this event
@@ -173,7 +173,7 @@ def get_event_bookings(event_id):
 @events_bp.route('/<int:event_id>/analytics', methods=['GET'])
 @role_required('organizer')
 def get_event_analytics(event_id):
-    organizer_id = get_jwt_identity()
+    organizer_id = int(get_jwt_identity())
     event = Event.query.get_or_404(event_id)
     
     if event.organizer_id != organizer_id:
@@ -206,7 +206,7 @@ def get_event_analytics(event_id):
 @events_bp.route('/<int:event_id>/status', methods=['PATCH'])
 @role_required('organizer')
 def update_event_status(event_id):
-    organizer_id = get_jwt_identity()
+    organizer_id = int(get_jwt_identity())
     event = Event.query.get_or_404(event_id)
     
     if event.organizer_id != organizer_id:
@@ -229,7 +229,7 @@ def update_event_status(event_id):
 @events_bp.route('/organizer/stats', methods=['GET'])
 @role_required('organizer')
 def get_organizer_global_stats():
-    organizer_id = get_jwt_identity()
+    organizer_id = int(get_jwt_identity())
     
     # Total Events
     total_events = Event.query.filter_by(organizer_id=organizer_id).count()
