@@ -61,7 +61,7 @@ def upgrade():
     sa.Column('price_multiplier', sa.Float(), nullable=True),
     sa.ForeignKeyConstraint(['venue_id'], ['event_venues.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('venue_id', 'row_label', 'seat_number', name='unique_seat_per_venue')
+    sa.UniqueConstraint('venue_id', 'row_label', 'seat_number', name='event_unique_seat_per_venue')
     )
     op.create_table('event_bookings',
     sa.Column('id', sa.Integer(), nullable=False),

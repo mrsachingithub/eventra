@@ -39,7 +39,7 @@ class Seat(db.Model):
     seat_type = db.Column(db.String(20), default='Regular') # Regular, VIP
     price_multiplier = db.Column(db.Float, default=1.0)
     
-    __table_args__ = (db.UniqueConstraint('venue_id', 'row_label', 'seat_number', name='unique_seat_per_venue'),)
+    __table_args__ = (db.UniqueConstraint('venue_id', 'row_label', 'seat_number', name='event_unique_seat_per_venue'),)
 
 class Event(db.Model):
     __tablename__ = 'event_events'
