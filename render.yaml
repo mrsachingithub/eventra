@@ -1,6 +1,7 @@
 services:
   - type: web
     name: event-ticket-system
+    plan: free
     env: python
     buildCommand: bash build.sh
     startCommand: gunicorn run:app
