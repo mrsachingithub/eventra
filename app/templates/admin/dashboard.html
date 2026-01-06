@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="dashboard-container admin-dashboard">
+    <h1 class="page-title"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="icon"><i class="fas fa-users"></i></div>
+            <div class="info">
+                <h3>Total Users</h3>
+                <p id="totalUsers">Loading...</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="icon"><i class="fas fa-calendar-check"></i></div>
+            <div class="info">
+                <h3>Total Events</h3>
+                <p id="totalEvents">Loading...</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="icon"><i class="fas fa-dollar-sign"></i></div>
+            <div class="info">
+                <h3>Total Revenue</h3>
+                <p id="totalRevenue">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">Management</div>
+
+    <!-- Tabs or Sections -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showAdminTab('users')">User Management</button>
+        <button class="tab-btn" onclick="showAdminTab('events')">Event Oversight</button>
+    </div>
+
+    <!-- User Management Section -->
+    <div id="usersSection" class="admin-section">
+        <h3>All Users</h3>
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="allUsersTable">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Event Oversight Section -->
+    <div id="eventsSection" class="admin-section" style="display: none;">
+        <h3>All Events</h3>
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Organizer</th>
+                        <th>Status</th>
+                        <th>Revenue</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="allEventsTable">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

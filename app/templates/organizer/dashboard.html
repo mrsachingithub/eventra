@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h2>Organizer Dashboard</h2>
+    <div class="actions">
+        <a href="/organizer/create-venue" class="btn-primary">Create Venue</a>
+        <a href="/organizer/create-event" class="btn-primary">Create Event</a>
+    </div>
+
+    <!-- Global Stats -->
+    <div class="stats-grid" style="margin-bottom: 30px;">
+        <div class="stat-card">
+            <div class="icon"><i class="fas fa-calendar-check"></i></div>
+            <div>
+                <h3>Total Events</h3>
+                <p id="globalEvents">0</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="icon"><i class="fas fa-ticket-alt"></i></div>
+            <div>
+                <h3>Total Tickets Sold</h3>
+                <p id="globalTickets">0</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="icon"><i class="fas fa-dollar-sign"></i></div>
+            <div>
+                <h3>Total Revenue</h3>
+                <p id="globalRevenue">$0.00</p>
+            </div>
+        </div>
+    </div>
+
+    <h3>My Events</h3>
+    <div id="eventsList" class="cards-grid">
+        <!-- JS will populate this -->
+        <p>Loading events...</p>
+    </div>
+</div>
+
+<!-- Event Management Modal -->
+<div id="manageEventModal" class="modal">
+    <div class="modal-content" style="max-width: 900px;">
+        <span class="close">&times;</span>
+        <h2 id="manageEventTitle">Manage Event</h2>
+
+        <div class="actions" style="justify-content: space-between; margin-bottom: 20px;">
+            <div id="eventStatusDisplay">Status: <span id="currentStatus" style="font-weight:bold;">Active</span></div>
+            <button id="toggleStatusBtn" class="btn-primary" style="background: #e74c3c; width: auto;">Cancel
+                Event</button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-ticket-alt"></i></div>
+                <div>
+                    <h3>Total Capacity</h3>
+                    <p id="statCapacity">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-check-circle"></i></div>
+                <div>
+                    <h3>Sold</h3>
+                    <p id="statSold">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-hourglass-half"></i></div>
+                <div>
+                    <h3>Remaining</h3>
+                    <p id="statRemaining">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-dollar-sign"></i></div>
+                <div>
+                    <h3>Revenue</h3>
+                    <p id="statRevenue">$0.00</p>
+                </div>
+            </div>
+        </div>
+
+        <h3>Recent Bookings</h3>
+        <div id="eventBookingsList" class="bookings-list" style="max-height: 300px; overflow-y: auto;">
+            <!-- JS will populate -->
+            <p>Loading bookings...</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

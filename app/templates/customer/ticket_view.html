@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="ticket-container"
+    style="max-width: 600px; margin: 4rem auto; background: white; color: black; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    <div class="ticket-header"
+        style="background: var(--primary-color); padding: 2rem; color: white; text-align: center;">
+        <h1 style="margin: 0; font-family: 'Cinzel', serif;">{{ event.title }}</h1>
+        <p style="margin: 0.5rem 0 0; opacity: 0.9;">{{ event.date_time }}</p>
+    </div>
+
+    <div class="ticket-body" style="padding: 2rem;">
+        <div class="ticket-info-grid"
+            style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+            <div>
+                <small style="color: #666; text-transform: uppercase; letter-spacing: 1px;">Venue</small>
+                <p style="margin: 0.2rem 0; font-weight: bold; font-size: 1.1rem;">{{ venue.name }}</p>
+                <p style="margin: 0; font-size: 0.9rem; color: #444;">{{ venue.address }}</p>
+            </div>
+            <div style="text-align: right;">
+                <small style="color: #666; text-transform: uppercase; letter-spacing: 1px;">Booking ID</small>
+                <p style="margin: 0.2rem 0; font-weight: bold; font-size: 1.1rem;">#{{ booking.id }}</p>
+            </div>
+
+            <div>
+                <small style="color: #666; text-transform: uppercase; letter-spacing: 1px;">Seats</small>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.2rem;">
+                    {% for ticket in tickets %}
+                    <span
+                        style="background: var(--primary-color); color: white; padding: 4px 10px; border-radius: 4px; font-weight: bold;">
+                        {{ ticket.seat_label }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <small style="color: #666; text-transform: uppercase; letter-spacing: 1px;">Total Paid</small>
+                <p style="margin: 0.2rem 0; font-weight: bold; font-size: 1.1rem; color: var(--primary-color);">${{
+                    booking.total_amount }}</p>
+            </div>
+        </div>
+
+        <div class="qr-section" style="text-align: center; border-top: 2px dashed #ddd; padding-top: 2rem;">
+            <p style="margin-bottom: 1rem; color: #666;">Scan for Entry</p>
+            <img src="data:image/png;base64,{{ qr_code }}" alt="Ticket QR Code" style="width: 200px; height: 200px;">
+            <p style="margin-top: 1rem; font-family: monospace; color: #888;">{{ unique_code }}</p>
+        </div>
+    </div>
+
+    <div class="ticket-footer" style="padding: 1.5rem; background: #f8f9fa; text-align: center;">
+        <button onclick="window.print()" class="btn-primary"
+            style="display: inline-block; width: auto; padding: 0.8rem 2rem;">
+            <i class="fas fa-print"></i> Print / Download Ticket
+        </button>
+        <a href="/my-bookings" style="display: block; margin-top: 1rem; color: #666;">Return to My Bookings</a>
+    </div>
+</div>
+
+<style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        .ticket-container,
+        .ticket-container * {
+            visibility: visible;
+        }
+
+        .ticket-container {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: 0;
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+
+        .ticket-footer {
+            display: none !important;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="event-details-container">
+    <div id="eventInfo" class="event-hero">
+        <!-- JS populated -->
+        <h2>Loading...</h2>
+    </div>
+
+    <div class="booking-section">
+        <h3>Select Seats</h3>
+        <div class="screen">SCREEN</div>
+        <div id="seatMap" class="seat-map"
+            style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+            <!-- JS populated -->
+        </div>
+
+        <div class="booking-summary">
+            <p>Selected: <span id="selectedCount">0</span> <span id="selectedSeatsList"
+                    style="font-size: 0.9em; color: #aaa;"></span></p>
+            <p>Total: $<span id="totalPrice">0.00</span></p>
+            <button id="bookBtn" class="btn-primary" disabled>Proceed to Payment</button>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal"
+        style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center;">
+        <div class="modal-content"
+            style="background-color: var(--card-bg); margin: auto; padding: 2rem; border-radius: 15px; width: 90%; max-width: 500px; color: white; position: relative; top: 50%; transform: translateY(-50%);">
+            <span class="close"
+                style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+            <h2 style="color: var(--primary-color); margin-top: 0;">Payment Details</h2>
+            <div style="margin-bottom: 1.5rem;">
+                <p>Total Amount: <strong style="font-size: 1.2rem;">$<span id="modalTotal">0.00</span></strong></p>
+            </div>
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label>Card Number (Mock)</label>
+                    <input type="text" placeholder="1234 5678 9012 3456" value="1234 5678 9012 3456" readonly>
+                </div>
+                <div class="form-group" style="display: flex; gap: 1rem;">
+                    <div style="flex: 1;">
+                        <label>Expiry</label>
+                        <input type="text" placeholder="MM/YY" value="12/30" readonly>
+                    </div>
+                    <div style="flex: 1;">
+                        <label>CVV</label>
+                        <input type="text" placeholder="123" value="123" readonly>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" style="margin-top: 1rem;">Pay & Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const EVENT_ID = {{ event_id }};
+</script>
+{% endblock %}

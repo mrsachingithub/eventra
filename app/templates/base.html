@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventra - Book Your Experience</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="/" class="logo-link">
+                    <!-- The Wing Icon (Absolute positioned to sit above text) -->
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Bottom Swoosh -->
+                            <path d="M100 50 C 60 55, 30 40, 10 30 C 40 45, 70 50, 100 50 Z" fill="#800080" />
+                            <!-- Middle Swoosh -->
+                            <path d="M100 50 C 70 45, 50 20, 30 15 C 60 30, 85 45, 100 50 Z" fill="#800080" />
+                            <!-- Top Swoosh -->
+                            <path d="M100 50 C 80 30, 70 5, 60 0 C 75 15, 90 40, 100 50 Z" fill="#800080" />
+                        </svg>
+                    </div>
+                    <span class="logo-text">EVENTRA</span>
+                </a>
+            </div>
+            <ul>
+                <li><a href="/">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-text">EVENTRA</span>
+            </div>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/about">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Eventra. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>

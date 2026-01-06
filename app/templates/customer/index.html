@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="carousel-container">
+        <!-- Item 0: Previous -->
+        <div class="carousel-item">
+            <video muted loop playsinline>
+                <source src="{{ url_for('static', filename='videos/01.06.2026.mp4') }}" type="video/mp4">
+            </video>
+            <div class="carousel-content">
+                <h1>Summer Music Festival</h1>
+                <p class="event-meta"><i class="fas fa-map-marker-alt"></i> Central Park Arena</p>
+                <p class="event-meta"><i class="fas fa-calendar-alt"></i> June 01, 2026 | 18:00 PM</p>
+                <div class="ticket-stats">
+                    <span><i class="fas fa-ticket-alt"></i> Available: 150</span>
+                    <span><i class="fas fa-check-circle"></i> Sold: 850</span>
+                </div>
+            </div>
+            <div class="carousel-overlay">
+                <h2>Summer Music Festival</h2>
+            </div>
+        </div>
+
+        <!-- Item 1: Active (Center) -->
+        <div class="carousel-item">
+            <video muted loop playsinline>
+                <source src="{{ url_for('static', filename='videos/hero_video.mp4') }}" type="video/mp4">
+            </video>
+            <div class="carousel-content">
+                <h1>Grand Opera Night</h1>
+                <p class="event-meta"><i class="fas fa-map-marker-alt"></i> Royal Opera House</p>
+                <p class="event-meta"><i class="fas fa-calendar-alt"></i> July 15, 2026 | 20:00 PM</p>
+                <div class="ticket-stats">
+                    <span><i class="fas fa-ticket-alt"></i> Available: 45</span>
+                    <span><i class="fas fa-check-circle"></i> Sold: 1200</span>
+                </div>
+                <a href="#publicEventsList" class="btn-primary"
+                    style="display:inline-block; margin-top:20px; text-decoration:none;">Book Tickets</a>
+            </div>
+        </div>
+
+        <!-- Item 2: Next -->
+        <div class="carousel-item">
+            <video muted loop playsinline>
+                <source src="{{ url_for('static', filename='videos/coming soon.mp4') }}" type="video/mp4">
+            </video>
+            <div class="carousel-content">
+                <h1>Tech Innovators Summit</h1>
+                <p class="event-meta"><i class="fas fa-map-marker-alt"></i> Convention Center</p>
+                <p class="event-meta"><i class="fas fa-calendar-alt"></i> Aug 20, 2026 | 09:00 AM</p>
+                <div class="ticket-stats">
+                    <span><i class="fas fa-ticket-alt"></i> Available: 500</span>
+                    <span><i class="fas fa-check-circle"></i> Sold: 200</span>
+                </div>
+            </div>
+            <div class="carousel-overlay">
+                <h2>Tech Innovators Summit</h2>
+            </div>
+        </div>
+    </div>
+
+    <div id="publicEventsList" class="cards-grid">
+        <!-- JS will populate -->
+        <p>Loading events...</p>
+    </div>
+</div>
+{% endblock %}
